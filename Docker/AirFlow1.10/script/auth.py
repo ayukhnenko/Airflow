@@ -1,10 +1,3 @@
-#!/bin/sh
-
-# Создание БД
-sleep 10
-airflow upgradedb
-sleep 10
-
 airflow users create \
           --username admin \
           --firstname admin \
@@ -12,6 +5,4 @@ airflow users create \
           --role Admin \
           --email admin@example.org \
           -p 12345
-sleep 10		  
-# Запуск шедулера и вебсервера
-airflow scheduler & airflow webserver
+          

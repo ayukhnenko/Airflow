@@ -8,7 +8,11 @@ ENV AIRFLOW_HOME=${AIRFLOW_USER_HOME}
 
 # Сборка airflow
 RUN pip install apache-airflow[postgres]==${AIRFLOW_VERSION}
+RUN pip install wtforms==2.3.3
+RUN pip install markupsafe==2.0.1
 RUN pip install SQLAlchemy==1.3.23
+RUN pip install flask-bcrypt
+
 
 # Создаем директрию для скриптов
 RUN mkdir /project
@@ -18,7 +22,10 @@ COPY script/ /project/scripts/
 COPY config/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
 
 # Доступы для скрипта
-RUN chmod +x ./project/scripts/init.sh
+RUN chmod +x /project/scripts/init.sh
+#RUN chmod +x /project/scripts/auth.py
+
+#CMD [ "python", "/project/scripts/auth.py" ]
 
 # Запускаем sh скрипт
-ENTRYPOINT ["./project/scripts/init.sh"]
+ENTRYPOINT ["/project/scripts/init.sh"]
